@@ -10,6 +10,7 @@ namespace ChatServer
 {
     public class WCFChatService : IWCFChatService
     {
+        
 
         public bool Login(string username, string password)
         {
@@ -24,20 +25,35 @@ namespace ChatServer
                     tmp = passwd.ToList();
                 }
             }
-            catch
+            catch{throw;}
+            return tmp[0].Trim().Equals(password);
+        }
+        public List<UserInfo> UserList()
+        {
+            List<UserInfo> userInfo = new List<UserInfo>();
+
+            try
             {
-                throw;
-                
+                using (Database data = new Database())
+                {
+                    foreach (User u in data.Users)
+                    {
+                        UserInfo uInfo = new UserInfo();
+                        uInfo.Username = u.UserName;
+                        uInfo.Password = u.Password;
+                        userInfo.Add(uInfo);//Terrible idea in reality, 
+                                            //but the only way I could think of 
+                                            //to return a complex type
+                    }
+                }
             }
-            string s = "";
-            int i = 0;
-            while (tmp[0][i]!=' ')
+            catch (Exception e)
             {
-                s += tmp[0][i];
-                i++;
+
+                throw e;
             }
-            
-            return s.Equals(password);
+
+            return userInfo;
         }
     }
 }
