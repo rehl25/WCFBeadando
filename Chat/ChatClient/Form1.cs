@@ -18,8 +18,8 @@ namespace ChatClient
         IWCFChatService proxy;
         public Form1()
         {
-            ChannelFactory<WCFChatService> channelfactory = 
-                new ChannelFactory<WCFChatService>();
+            ChannelFactory<IWCFChatService> channelfactory = 
+                new ChannelFactory<IWCFChatService>("ChatServiceEndpoint");
             proxy = channelfactory.CreateChannel();
             InitializeComponent();
         }

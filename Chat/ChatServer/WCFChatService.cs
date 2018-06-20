@@ -29,7 +29,15 @@ namespace ChatServer
                 throw;
                 
             }
-            return tmp.Contains(password);
+            string s = "";
+            int i = 0;
+            while (tmp[0][i]!=' ')
+            {
+                s += tmp[0][i];
+                i++;
+            }
+            
+            return s.Equals(password);
         }
     }
 }
